@@ -13,4 +13,7 @@ public class Constants {
     public enum TimeZone {
         PT, MT, CT, ET
     }
+
+    final public static String messageTableName = "scheduledMessage";
+    final public static String databaseName = "schedulerDatabase";
 }

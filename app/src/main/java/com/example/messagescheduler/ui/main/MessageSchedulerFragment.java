@@ -7,11 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.messagescheduler.Constants;
 import com.example.messagescheduler.R;
 import com.example.messagescheduler.Constants.*;
+import com.example.messagescheduler.db.main.ScheduledMessage;
+import com.example.messagescheduler.db.main.SchedulerDatabase;
+
+import java.time.LocalDateTime;
 
 /**
  * Fragment containing a form used to schedule new messages
@@ -45,7 +51,29 @@ public class MessageSchedulerFragment extends Fragment {
         Button button = (Button) v.findViewById(R.id.scheduleMessageButton);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ScheduledMessage message = new ScheduledMessage();
 
+                Constants.App app = Constants.App.valueOf(((Spinner)v.findViewById(R.id.messagingAppSelector)).getSelectedItem().toString());
+                message.setApp(app);
+
+                String messageText = v.findViewById(R.id.messageText).toString();
+                message.setMessage(messageText);
+
+                Constants.Frequency frequency = Constants.Frequency.valueOf(((Spinner)v.findViewById(R.id.frequencySelector)).getSelectedItem().toString());
+                message.setFrequency(frequency);
+
+                TimePicker timePicker = (TimePicker)v.findViewById(R.id.scheduledTimePicker);
+                int hour = timePicker.getHour();
+                int minute = timePicker.getMinute();
+                LocalDateTime scheduledTime = LocalDateTime.of(0,0,0,hour,minute);
+                message.setScheduledTime(scheduledTime);
+
+                Constants.TimeZone timeZone = Constants.TimeZone.valueOf(((Spinner)v.findViewById(R.id.timeZoneSelector)).getSelectedItem().toString());
+                message.setTimeZone(timeZone);
+
+                SchedulerDatabase db = SchedulerDatabase.getInstance(getActivity());
+
+                db.getScheduledMessageDao().insert(message);
             }
         });
 

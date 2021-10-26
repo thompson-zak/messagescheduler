@@ -25,6 +25,8 @@ public class ScheduledMessage {
 
     private Constants.TimeZone timeZone;
 
+    public ScheduledMessage() {}
+
     public ScheduledMessage(int message_id, Constants.App app, String message, Constants.Frequency frequency, LocalDateTime scheduledTime, Constants.TimeZone timeZone) {
         this.message_id = message_id;
         this.app = app;

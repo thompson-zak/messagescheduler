@@ -11,7 +11,7 @@ import com.example.messagescheduler.Constants;
 @Database(entities = { ScheduledMessage.class }, version = 1)
 public abstract class SchedulerDatabase extends RoomDatabase {
 
-    public abstract ScheduledMessageDAO getNoteDao();
+    public abstract ScheduledMessageDAO getScheduledMessageDao();
 
     private static SchedulerDatabase schedulerDB;
 

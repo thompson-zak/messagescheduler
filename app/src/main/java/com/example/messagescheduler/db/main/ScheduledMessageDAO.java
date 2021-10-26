@@ -21,7 +21,7 @@ public interface ScheduledMessageDAO {
      * @param note, object to be inserted
      */
     @Insert
-    void insert(ScheduledMessage message);
+    long insert(ScheduledMessage message);
 
     /*
      * update the object in database

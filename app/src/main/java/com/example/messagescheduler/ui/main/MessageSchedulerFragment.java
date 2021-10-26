@@ -33,6 +33,12 @@ public class MessageSchedulerFragment extends Fragment {
         ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, frequencies);
         frequencyDropdown.setAdapter(frequencyAdapter);
 
+        //Create dropdown menu for selecting the time zone for the scheduled message
+        Spinner timeZoneDropdown = v.findViewById(R.id.timeZoneSelector);
+        String[] timeZones = new String[]{"PT", "MT", "CT", "ET"};
+        ArrayAdapter<String> timeZoneAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, timeZones);
+        timeZoneDropdown.setAdapter(timeZoneAdapter);
+
         return v;
     }
 }

@@ -15,16 +15,21 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabLayout=(TabLayout)findViewById(R.id.tabLayout);
-        viewPager=(ViewPager)findViewById(R.id.viewPager);
+
+        tabLayout= (TabLayout)findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Scheduled Messages"));
         tabLayout.addTab(tabLayout.newTab().setText("Schedule New Message"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
         final TabsAdapter adapter = new TabsAdapter(this,getSupportFragmentManager(), tabLayout.getTabCount());
+
+        viewPager= (ViewPager)findViewById(R.id.viewPager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {

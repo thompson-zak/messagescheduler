@@ -9,12 +9,12 @@
 
 
     <TextView
-        android:id="@+id/schedulerTitle"
+        android:id="@+id/appTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
-        android:text="Scheduler"
+        android:text="App"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

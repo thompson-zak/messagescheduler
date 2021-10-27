@@ -3,7 +3,7 @@ package com.example.messagescheduler;
 public class Constants {
 
     public enum App {
-        WhatsApp
+        Text, WhatsApp
     }
 
     public enum Frequency {

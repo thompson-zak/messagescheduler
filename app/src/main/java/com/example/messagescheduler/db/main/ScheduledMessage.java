@@ -6,13 +6,12 @@ import androidx.room.PrimaryKey;
 
 import com.example.messagescheduler.Constants;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
 public class ScheduledMessage {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int message_id;
 
     private Constants.App app;
@@ -21,17 +20,20 @@ public class ScheduledMessage {
 
     private Constants.Frequency frequency;
 
-    private LocalDateTime scheduledTime;
+    private String phoneNumber;
+
+    private String scheduledTime;
 
     private Constants.TimeZone timeZone;
 
     public ScheduledMessage() {}
 
-    public ScheduledMessage(int message_id, Constants.App app, String message, Constants.Frequency frequency, LocalDateTime scheduledTime, Constants.TimeZone timeZone) {
+    public ScheduledMessage(int message_id, Constants.App app, String message, Constants.Frequency frequency, String phoneNumber, String scheduledTime, Constants.TimeZone timeZone) {
         this.message_id = message_id;
         this.app = app;
         this.message = message;
         this.frequency = frequency;
+        this.phoneNumber = phoneNumber;
         this.scheduledTime = scheduledTime;
         this.timeZone = timeZone;
     }
@@ -68,11 +70,15 @@ public class ScheduledMessage {
         this.frequency = frequency;
     }
 
-    public LocalDateTime getScheduledTime() {
+    public String getPhoneNumber() { return phoneNumber; }
+
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public String getScheduledTime() {
         return scheduledTime;
     }
 
-    public void setScheduledTime(LocalDateTime scheduledTime) {
+    public void setScheduledTime(String scheduledTime) {
         this.scheduledTime = scheduledTime;
     }
 
@@ -89,12 +95,12 @@ public class ScheduledMessage {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ScheduledMessage that = (ScheduledMessage) o;
-        return message_id == that.message_id && app == that.app && Objects.equals(message, that.message) && frequency == that.frequency && Objects.equals(scheduledTime, that.scheduledTime) && timeZone == that.timeZone;
+        return message_id == that.message_id && app == that.app && Objects.equals(message, that.message) && frequency == that.frequency && Objects.equals(phoneNumber, that.phoneNumber) && Objects.equals(scheduledTime, that.scheduledTime) && timeZone == that.timeZone;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message_id, app, message, frequency, scheduledTime, timeZone);
+        return Objects.hash(message_id, app, message, frequency, phoneNumber, scheduledTime, timeZone);
     }
 
     @Override
@@ -104,6 +110,7 @@ public class ScheduledMessage {
                 ", app=" + app +
                 ", message='" + message + '\'' +
                 ", frequency=" + frequency +
+                ", phoneNumber='" + phoneNumber + '\'' +
                 ", scheduledTime=" + scheduledTime +
                 ", timeZone=" + timeZone +
                 '}';

@@ -63,7 +63,7 @@
 
     <Spinner
         android:id="@+id/frequencySelector"
-        android:layout_width="181dp"
+        android:layout_width="143dp"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="13dp"
@@ -111,4 +111,24 @@
         android:spinnerMode="dropdown"
         app:layout_constraintStart_toEndOf="@+id/scheduledTimePicker"
         app:layout_constraintTop_toBottomOf="@+id/messageText" />
+
+    <TextView
+        android:id="@+id/phoneNumberTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="12dp"
+        android:text="Phone Number"
+        app:layout_constraintStart_toEndOf="@+id/frequencyTitle"
+        app:layout_constraintTop_toBottomOf="@+id/messageText" />
+
+    <EditText
+        android:id="@+id/phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:ems="10"
+        android:inputType="phone"
+        app:layout_constraintStart_toEndOf="@+id/frequencySelector"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNumberTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>

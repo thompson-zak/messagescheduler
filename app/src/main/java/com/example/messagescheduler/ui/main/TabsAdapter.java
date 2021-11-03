@@ -20,7 +20,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new ScheduledMessageFragment();
+                return new ScheduledMessagesFragment();
             case 1:
                 return new MessageSchedulerFragment();
             default:

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,8 @@ public class ScheduledMessagesFragment extends Fragment {
 
     MessagesAdapter adapter;
     SchedulerDatabase db;
+    ListView listView;
+    List<ScheduledMessage> messages;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup, Bundle savedInstanceState){
@@ -30,12 +33,24 @@ public class ScheduledMessagesFragment extends Fragment {
 
         //Fetch list of scheduled messages from room DB
         db = SchedulerDatabase.getInstance(getActivity());
-        List<ScheduledMessage> messages = db.getScheduledMessageDao().getAll();
+        messages = db.getScheduledMessageDao().getAll();
 
         //Create and populate list view using custom messages adapter
         adapter = new MessagesAdapter(this.getContext(), messages);
-        ListView listView = v.findViewById(R.id.messages_list_view);
+        listView = v.findViewById(R.id.messages_list_view);
         listView.setAdapter(adapter);
+        listView.setLongClickable(true);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long arg3){
+                ScheduledMessage toBeRemoved = messages.get(index);
+                db.getScheduledMessageDao().delete(toBeRemoved);
+                messages.remove(index);
+                adapter.notifyDataSetChanged();
+                return true;
+            };
+        });
 
         return v;
     }
@@ -45,7 +60,7 @@ public class ScheduledMessagesFragment extends Fragment {
         super.setMenuVisibility(menuVisible);
         if(db != null) {
             Log.v("Set Menu Visibility", "Updating scheduled messages with setMenuVisibility");
-            List<ScheduledMessage> messages = db.getScheduledMessageDao().getAll();
+            messages = db.getScheduledMessageDao().getAll();
             adapter.clear();
             adapter.addAll(messages);
             adapter.notifyDataSetChanged();

@@ -1,6 +1,10 @@
 package com.example.messagescheduler.ui.main;
 
+import static java.net.Proxy.Type.HTTP;
+
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.example.messagescheduler.Constants;
 import com.example.messagescheduler.R;
 import com.example.messagescheduler.Constants.*;
+import com.example.messagescheduler.alarm.main.TextAlarm;
 import com.example.messagescheduler.db.main.ScheduledMessage;
 import com.example.messagescheduler.db.main.SchedulerDatabase;
 
@@ -88,8 +93,13 @@ public class MessageSchedulerFragment extends Fragment {
                     return;
                 }
 
-                SchedulerDatabase db = SchedulerDatabase.getInstance(getActivity());
-                db.getScheduledMessageDao().insert(message);
+                if(enqueueWorkManagerJob(message)) {
+                    //Only load message into DB if the work request is successfully scheduled
+                    SchedulerDatabase db = SchedulerDatabase.getInstance(getActivity());
+                    db.getScheduledMessageDao().insert(message);
+                } else {
+                    //TODO - throw error or alert dialog for failure to enqueue work
+                }
 
                 //Clear all text fields after successful scheduling
                 messageTextComponent.setText("");
@@ -98,6 +108,25 @@ public class MessageSchedulerFragment extends Fragment {
         });
 
         return v;
+    }
+
+    private boolean enqueueWorkManagerJob(ScheduledMessage message) {
+
+        Constants.Frequency frequency = message.getFrequency();
+
+        // TODO - expand frequency options
+        switch(frequency) {
+            case Daily:
+                TextAlarm textAlarm = new TextAlarm();
+                try {
+                    textAlarm.setAlarm(this.getContext(), message);
+                } catch (Exception e) {
+                    return false;
+                }
+                break;
+        }
+
+        return true;
     }
 
     private boolean validateSchedulingRequest(ScheduledMessage scheduledMessage) {

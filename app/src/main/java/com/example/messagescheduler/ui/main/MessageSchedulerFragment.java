@@ -81,9 +81,18 @@ public class MessageSchedulerFragment extends Fragment {
                 String phoneNumber = phoneNumberComponent.getText().toString();
                 message.setPhoneNumber(phoneNumber);
 
-                int hour = timePicker.getHour();
-                int minute = timePicker.getMinute();
-                String scheduledTime = String.valueOf(hour) + ":" + String.valueOf(minute);
+                String hour = String.valueOf(timePicker.getHour());
+                String minute = String.valueOf(timePicker.getMinute());
+
+                if(hour.length() == 1) {
+                    hour = "0" + hour;
+                }
+
+                if(minute.length() == 1) {
+                    minute = "0" + minute;
+                }
+
+                String scheduledTime = hour + ":" + minute;
                 message.setScheduledTime(scheduledTime);
 
                 Constants.TimeZone timeZone = Constants.TimeZone.valueOf(timeZoneDropdown.getSelectedItem().toString());
@@ -119,7 +128,7 @@ public class MessageSchedulerFragment extends Fragment {
             case Daily:
                 TextAlarm textAlarm = new TextAlarm();
                 try {
-                    textAlarm.setAlarm(this.getContext(), message);
+                    textAlarm.setAlarm(this.requireContext(), message);
                 } catch (Exception e) {
                     return false;
                 }
